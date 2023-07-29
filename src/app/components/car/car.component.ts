@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Car } from 'src/app/models/car';
+import { ActivatedRoute } from '@angular/router';
+import { CarDetail } from 'src/app/models/carDetail';
 import { CarService } from 'src/app/services/car.service';
 
 @Component({
@@ -8,20 +9,63 @@ import { CarService } from 'src/app/services/car.service';
   styleUrls: ['./car.component.css'],
 })
 export class CarComponent implements OnInit {
-  cars:Car[] = [ ];
-
+  cars:CarDetail[] = [ ];
   dataLoaded = false;
-  constructor(private carService:CarService) {}
+
+  baseUrl:string="https://localhost:7061/files/"
+
+  
+  constructor(private carService:CarService , private activatedRoute:ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.getCars();
-  }
+    this.activatedRoute.params.subscribe(params => {
+      const brandId = params["brandId"];
+      const colorId = params["colorId"];
   
+      if (brandId && colorId) {
+        this.getCarsByBrandAndColor(brandId, colorId);
+      } else if (colorId) {
+        this.getCarsByColor(colorId);
+      } else if (brandId) {
+        this.getCarsByBrand(brandId);
+      } else {
+        this.getCars();
+      }
+    });
+  }
 
   getCars(){
     this.carService.getCars().subscribe(response=>{
       this.cars = response.data
       this.dataLoaded = true
     });
+  }
+
+  getCarsByBrand(brandId:number){
+    this.carService.getCarsByBrand(brandId).subscribe((response)=>{
+      this.cars = response.data;
+      this.dataLoaded=true;
+    })
+  }
+
+  getCarsByColor(colorId:number){
+    this.carService.getCarsByColor(colorId).subscribe((response)=>{
+      this.cars = response.data
+      this.dataLoaded = true
+    })
+  }
+
+  getCarsByBrandAndColor(brandId:number,colorId:number){
+    this.carService.getCarsByBrandAndColor(colorId,brandId).subscribe((response)=>{
+    this.cars = response.data
+    this.dataLoaded=true
+    })
+  }
+
+  getCarImageUrl(imagePath:string):string{
+    if(imagePath !== null){
+      return "https://localhost:7061/files/default.jpg" //this.baseUrl + imagePath;
+    }
+    return "https://localhost:7061/files/default.jpg"
   }
 }
