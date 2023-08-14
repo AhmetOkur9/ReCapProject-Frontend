@@ -1,4 +1,9 @@
+<div class="mb-3">
+  <label for="filterText" class="form-label"></label>
+  <input for="filterText" [(ngModel)]="filterText" id="filterText" class="form-control me-2" type="search" placeholder="Renk Ara" aria-label="Search">
+</div>
+
 <ul class="list-group">
-  <li class="list-group-item list-group-item-dark" (click)="resetCurrentColor()" [class]="getAllColorClass()" routerLink="/cars">Tüm Renkler</li>
-  <li class="list-group-item list-group-item-secondary" (click)="setCurrentColor(color)" routerLink="/cars/color/{{color.colorId}}" *ngFor="let color of colors" [class]="getCurrentColorClass(color)" >{{color.colorName}}</li>
+  <li *ngIf="!filterText" class="list-group-item list-group-item-dark" (click)="resetCurrentColor()" [class]="getAllColorClass()" routerLink="/cars">Tüm Renkler</li>
+  <li class="list-group-item list-group-item-secondary" (click)="setCurrentColor(color)" routerLink="/cars/color/{{color.colorId}}" *ngFor="let color of colors | colorFilter:filterText" [class]="getCurrentColorClass(color)" >{{color.colorName}}</li>
 </ul>

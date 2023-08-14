@@ -1,0 +1,61 @@
+<br />
+<br />
+<div>
+  <h5 *ngFor="let car of cars">
+    Normalde burada uzun bir açıklama yazar ama ben onu veri tabanına kısa olsun
+    diye marka adını yazdım. {{ car.description }}
+  </h5>
+</div>
+<div>
+  <div class="container mt-4">
+    <div class="row">
+      <div *ngFor="let car of cars" class="col-md-7">
+        <img
+          *ngIf="car.imagePath"
+          [src]="baseUrl + car.imagePath"
+          class="card-img-top"
+          style="object-fit: cover"
+        />
+
+        <img
+          *ngIf="!car.imagePath"
+          [src]="baseUrl + 'default.jpg'"
+          class="card-img-top"
+          style="object-fit: cover"
+        />
+      </div>
+      <div class="col-md-5">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngFor="let car of cars">
+            Araba Markası = {{ car.brandName }}
+          </li>
+          <li class="list-group-item" *ngFor="let car of cars">
+            Arabanın Rengi = {{ car.colorName }}
+          </li>
+          <li class="list-group-item" *ngFor="let car of cars">
+            Günlük Fiyatı = {{ car.dailyPrice }}
+          </li>
+          <li class="list-group-item" *ngFor="let car of cars">
+            Model Yılı = {{ car.modelYear }}
+          </li>
+          <li><button  type="button" class="btn btn-success" routerLink="rental/getrentalbyid/{{car.carId}}" *ngFor="let car of cars" (click)="getTheSelectCar(car)"> Arabayı Kirala</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<h5 *ngIf="currentCar">{{currentCar.carId}}</h5>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

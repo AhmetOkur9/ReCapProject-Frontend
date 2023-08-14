@@ -1,8 +1,11 @@
-
+<div class="mb-3">
+  <label for="filterText" class="form-label"></label>
+  <input for="filterText" [(ngModel)]="filterText" id="filterText" class="form-control me-2" type="search" placeholder="Araba Ara" aria-label="Search">
+</div>
 
 <div class="row mt-4" style="margin-left: 1%">
   <div
-    *ngFor="let car of cars"
+    *ngFor="let car of cars | carFilter:filterText"
     class="card mt-2 mr-2"
     style="width: 18rem; margin-right: 10px"
   >
@@ -44,8 +47,9 @@
       <div class="row">
         <button
           type="button"
+          
           class="btn btn-success"
-          routerLink="/cars/cardetails/{{ car.carId }}"
+          routerLink="/cars/getcardetailbyid/{{car.carId}}"
         >
           Araba Detayları
         </button>

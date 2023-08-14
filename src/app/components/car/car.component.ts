@@ -11,6 +11,8 @@ import { CarService } from 'src/app/services/car.service';
 export class CarComponent implements OnInit {
   cars:CarDetail[] = [ ];
   dataLoaded = false;
+  currentCarId: CarDetail | null;
+  filterText=""
 
   baseUrl:string="https://localhost:7061/files/"
 
@@ -21,7 +23,7 @@ export class CarComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       const brandId = params["brandId"];
       const colorId = params["colorId"];
-  
+
       if (brandId && colorId) {
         this.getCarsByBrandAndColor(brandId, colorId);
       } else if (colorId) {
@@ -34,12 +36,16 @@ export class CarComponent implements OnInit {
     });
   }
 
+
+
+
   getCars(){
     this.carService.getCars().subscribe(response=>{
       this.cars = response.data
       this.dataLoaded = true
     });
   }
+  
 
   getCarsByBrand(brandId:number){
     this.carService.getCarsByBrand(brandId).subscribe((response)=>{
@@ -68,4 +74,6 @@ export class CarComponent implements OnInit {
     }
     return "https://localhost:7061/files/default.jpg"
   }
+
+  
 }

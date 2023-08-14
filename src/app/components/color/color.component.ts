@@ -13,6 +13,7 @@ export class ColorComponent implements OnInit {
   //currentColor:Color;
   currentColor:Color | null;
   dataLoaded = false;
+  filterText=""
 
   constructor(private colorService:ColorService) {}
 
@@ -51,4 +52,5 @@ export class ColorComponent implements OnInit {
   resetCurrentColor(){
     this.currentColor=null;
   }
+
 }

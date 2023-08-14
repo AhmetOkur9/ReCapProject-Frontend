@@ -1,6 +1,15 @@
+<div class="mb-3">
+    <label for="filterText" class="form-label"></label>
+    <input for="filterText" [(ngModel)]="filterText" id="filterText" class="form-control me-2" type="search" placeholder="Marka Ara" aria-label="Search">
+</div>
+
+
 <ul class="list-group">
-    <li class="list-group-item list-group-item-dark" (click)="resetCurrentBrand()" [class]="getAllBrandClass()" routerLink="/cars">Tüm Markalar</li>
+    <li *ngIf="!filterText" class="list-group-item list-group-item-dark" (click)="resetCurrentBrand()" [class]="getAllBrandClass()" routerLink="/cars">Tüm Markalar</li>
    
-    <li class="list-group-item list-group-item-secondary" (click)="setCurrentBrand(brand)" routerLink="/cars/brand/{{brand.brandId}}" *ngFor="let brand of brands" [class]="getCurrentBrandClass(brand)"  >{{brand.brandName}}</li>
+    <li class="list-group-item list-group-item-secondary" (click)="setCurrentBrand(brand)" routerLink="/cars/brand/{{brand.brandId}}" *ngFor="let brand of brands | brandFilter:filterText" [class]="getCurrentBrandClass(brand)"  >{{brand.brandName}}</li>
 </ul>
+
+
+
 
